@@ -1,5 +1,6 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
+
 # Laravel Docker Starter Kit
 - Laravel v11.x
 - PHP v8.3.x
@@ -34,6 +35,11 @@
 
 ### From the second time onwards
 - `docker compose up -d`
+
+### Deploy on Ubuntu 24.04 LTS
+- sudo apt update; sudo apt upgrade;
+- sudo apt install docker.io docker-compose-v2
+- sudo usermod -aG docker ${USER}
 
 # Notes
 

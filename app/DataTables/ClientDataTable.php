@@ -46,7 +46,7 @@ class ClientDataTable extends DataTable
                     ->dom('Bfrtip')
                     ->orderBy(1)
                     ->language([
-                        'url' => asset('dist/plugins/datatables/lang/pt-br.json')
+                        'url' => app()->environment('production') ? secure_asset('dist/plugins/datatables/lang/pt-br.json') : asset('dist/plugins/datatables/lang/pt-br.json')
                     ])
                     // ->selectStyleSingle()
                     ->buttons(

@@ -45,7 +45,7 @@ class UserDataTable extends DataTable
             ->minifiedAjax()
             ->dom('Bfrtip')
             ->language([
-                'url' => asset('dist/plugins/datatables/lang/pt-br.json')
+                'url' => app()->environment('production') ? secure_asset('dist/plugins/datatables/lang/pt-br.json') : asset('dist/plugins/datatables/lang/pt-br.json')
             ])
             ->orderBy(1)
             ->buttons(

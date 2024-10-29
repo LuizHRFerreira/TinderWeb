@@ -35,6 +35,7 @@
 
             <div class="content-wrapper">
                 <section class="content">
+                    @include('layouts.messages')
                     @yield('content')
                 </section>
             </div>        

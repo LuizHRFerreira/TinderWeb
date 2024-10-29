@@ -7,5 +7,11 @@ return [
     'new'       => 'Novo',
     'exit'      => 'Sair',
     'enter'     => 'Entrar',
-    'register'  => 'Cadastrar'
+    'register'  => 'Cadastrar',
+    'edit'      => 'Editar',
+    'delete'    => 'Excluir',
+    'cancel'    => 'Cancelar',
+    'save'      => 'Salvar',
+    'name'      => 'Nome',
+    'phone'     => 'Telefone',
 ];

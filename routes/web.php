@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
@@ -21,5 +22,20 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/users',    [UserController::class, 'index'])->name('users.index');
-Route::get('/clients',  [ClientController::class, 'index'])->name('clients.index');
+
+Route::middleware([
+    AuthMiddleware::class,
+])->group(function () {
+
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/',                         [UserController::class, 'index'])->name('users.index');
+        Route::get('/profile',                  [UserController::class, 'profile'])->name('users.profile');
+        Route::post('{user_id}/update',                  [UserController::class, 'update'])->name('users.update');
+    });
+
+    Route::group(['prefix' => 'clients'], function () {
+        Route::get('/',                         [ClientController::class, 'index'])->name('clients.index');
+    });
+
+});
+

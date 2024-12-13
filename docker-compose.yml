@@ -82,11 +82,12 @@ services:
     ####################################################################################################
     redis:
         image: redis:latest
-        command: redis-server --appendonly yes
+        command: redis-server /usr/local/etc/redis/redis.conf --appendonly yes
         volumes:
         - .docker/redis/data:/data
+        - .docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
         ports:
-        - 6379:6379
+        - 127.0.0.1:6379:6379
 
     # ####################################################################################################
     # # DATABASE (MariaDB)

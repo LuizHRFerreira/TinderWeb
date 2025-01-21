@@ -5,12 +5,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/test',  [TestController::class, 'index'])->name('tests.index');
+
+Route::get('/products',         [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/create',  [ProductController::class, 'create'])->name('products.create');
+Route::post('/products',        [ProductController::class, 'store'])->name('products.store');
 
 Route::middleware([
     'auth:sanctum',

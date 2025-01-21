@@ -8,4 +8,7 @@ return [
     'repeat_password'   => 'Digite novamente a senha',
     'phone'             => 'Telefone',
     'photo'             => 'Foto',
+    'value'             => 'Valor',
+    'description'       => 'Descrição',
+    'user'              => 'Usuario',
 ];

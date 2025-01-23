@@ -11,4 +11,8 @@ return [
     'value'             => 'Valor',
     'description'       => 'Descrição',
     'user'              => 'Usuario',
+    'product'           => 'Produto',
+    'amount'            => 'Quantidade',
+    'is_paid'          => 'Pago',
+    'product'          => 'Produto',
 ];

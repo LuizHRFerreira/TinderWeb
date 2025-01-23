@@ -14,4 +14,6 @@ return [
     'save'      => 'Salvar',
     'name'      => 'Nome',
     'phone'     => 'Telefone',
+    'yes'       => 'Sim',
+    'no'        => 'Não',
 ];

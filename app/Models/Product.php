@@ -13,6 +13,7 @@ class Product extends Model
         'user_id',
         'name',
         'description',
-        'value'
+        'value',
+        'app_id',
     ];
 }

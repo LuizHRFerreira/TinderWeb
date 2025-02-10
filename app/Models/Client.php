@@ -19,5 +19,6 @@ class Client extends Model
         'email',
         'description',
         'code',
+        'app_id',
     ];
 }

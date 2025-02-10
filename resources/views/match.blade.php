@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-<style type="text/css">
+<style>
 *, *:before, *:after {
   box-sizing: border-box;
   padding: 0;
@@ -15,8 +15,8 @@ body {
 }
 
 .tinder {
-  width: 100vw;
-  height: 100vh;
+  width: 90vw;
+  height: 90vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -74,7 +74,7 @@ body {
   width: 90vw;
   max-width: 400px;
   height: 70vh;
-  background: #FFFFFF;
+  background:rgb(41, 69, 48);
   padding-bottom: 40px;
   border-radius: 8px;
   overflow: hidden;
@@ -138,13 +138,14 @@ body {
 }
 
 .fa-heart {
-  color: #FFACE4;
+  color:rgb(252, 77, 77);
 }
 
 .fa-remove {
-  color: #CDD6DD;
+  color:rgb(0, 0, 0);
 }
-        </style>
+
+  </style>
 
 <div class="tinder">
   <div class="tinder--status">
@@ -153,14 +154,9 @@ body {
   </div>
 
   <div class="tinder--cards">
-    <!--TO DO-->
-    <!--Implement JS myDoubleClickFunction to do what ecplained in next few lines -->
     <div class="tinder--card" ondblclick="myDoubleClickFunction()">
-      <img src="https://placeimg.com/600/300/people">
-      <!--TO DO-->
-      <h3 id="question1">Question 1</h3>
-     <!-- <h3 id="answer1">Answer 1</h3>-->
-     <!--  when user double clicks on card, "id=question" is displayed smaller (i.e. <h3>) and "id=answer" is displayed-->
+      <h3 id="question1">Nome da Pessoa</h3>
+      <img src="{{ asset('teste.PNG') }}">
     </div>
     <div class="tinder--card"  ondblclick="myDoubleClickFunction()">
       <img src="https://placeimg.com/600/300/animals">
@@ -192,10 +188,21 @@ body {
   </div>
 </div>
 
-@endsection
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js">
+</script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+
+function myDoubleClickFunction(event) {
+    let card = event.currentTarget;
+    let question = card.querySelector('[id^=question]');
+    let answer = card.querySelector('[id^=answer]');
+
+    if (question && answer) {
+        question.style.display = question.style.display === 'none' ? 'block' : 'none';
+        answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
+    }
+}
 
 'use strict';
 
@@ -307,5 +314,7 @@ var loveListener = createButtonListener(true);
 
 nope.addEventListener('click', nopeListener);
 love.addEventListener('click', loveListener);
-})
 </script>
+
+
+@endsection

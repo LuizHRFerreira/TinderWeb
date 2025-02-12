@@ -8,7 +8,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Criando nova venda</h1>
+                            <h1>Criando nova opção para as características cadastradas</h1>
                         </div>
                         <div class="col-sm-6">
                         </div>
@@ -16,9 +16,9 @@
                 </div>
             </section>
             <div class="container">
-            <form class="from-prevent-multiple-submits"  action="{{ route('sales.store') }}" method="post" enctype="multipart/form-data">
+            <form class="from-prevent-multiple-submits"  action="{{ route('options.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                @include('sales.fields')
+                @include('options.fields')
                 <div class="row no-print">
                     <div class="col-12 mt-4">
                         {{-- <a href="{{ route('companies.users.store', ['company_id' => request()->company_id]) }}">

@@ -8,20 +8,20 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use App\Models\characteristics;
+use App\Models\Option;
 
-class UserController extends Controller
+class I_amController extends Controller
 {
-    # Retorna a view index com a tabela de usuários
-    public function index(UserDataTable $dataTable) 
-    {
-        return $dataTable->render('users.index');
-    }
 
-    # Retorna a view de perfil do usuário
+    # Retorna a view para a pessoa escolher as opções das características que ela tem
     public function profile()
     {
+        $users = User::all();
         $user = \Auth::user();
-        return view('users.profile', compact('user'));
+        $characteristics = Characteristics::all();
+        $options = Option::all();
+        return view('i_am.profile', compact('user', 'users', 'characteristics', 'options'));
     }
 
     # Atualiza os dados do usuário

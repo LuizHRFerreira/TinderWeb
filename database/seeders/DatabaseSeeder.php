@@ -2,21 +2,33 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Client;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Option;
+use App\Models\characteristics;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        DB::table('apps')->insert([
+            'name' => "tinder", 
+        ]);        
 
-        Client::factory(20000)->create();
+        User::factory(5)->create();
 
+        characteristics::factory(5)->create();
+
+        Option::factory(5)->create();
+
+        DB::table('characteristics_options_users')->insert([
+            'users_id' => 1,
+            'characteristics_id' => 1,
+            'i_am' => 1,
+            'i_seek' => 1,
+        ]);
     }
 }

@@ -8,11 +8,11 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Produtos</h1>
+                            <h1>Caracteristicas</h1>
                         </div>
                         <div class="col-sm-6">
                         <div class="breadcrumb float-sm-right">
-                            <a href="{{ route('products.create') }}">
+                            <a href="{{ route('characteristics.create') }}">
                                 <button type="button" class="btn btn-primary">Novo</button>
                             </a>
                         </div>
@@ -22,11 +22,16 @@
             </section>
         </div>
         <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    
-                </div>
+        {{ $dataTable->table() }}
+            </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+
+    {{ $dataTable->scripts(attributes:[
+        'type' => 'module',
+    ]) }}
+@endpush

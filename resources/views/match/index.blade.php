@@ -152,34 +152,20 @@ body {
     <i class="fa fa-remove"></i>
     <i class="fa fa-heart"></i>
   </div>
-
+  
   <div class="tinder--cards">
-    <div class="tinder--card" ondblclick="myDoubleClickFunction()">
-      <h3 id="question1">Nome da Pessoa</h3>
-      <img src="{{ asset('teste.PNG') }}">
-    </div>
-    <div class="tinder--card"  ondblclick="myDoubleClickFunction()">
-      <img src="https://placeimg.com/600/300/animals">
-      <!--TO DO-->
-      <h3 id="question2">Question 2</h3>
-     <!-- <h3 id="answer2">Answer 2</h3>-->
-     <!--  when user double clicks on card, "id=question" is displayed smaller (i.e. <h3>) and "id=answer" is displayed-->
-    </div>
-    <div class="tinder--card">
-      <img src="https://placeimg.com/600/300/nature">
-      <h3>Demo card 3</h3>
-      <p>This is a demo for Tinder like swipe cards</p>
-    </div>
-    <div class="tinder--card">
-      <img src="https://placeimg.com/600/300/tech">
-      <h3>Demo card 4</h3>
-      <p>This is a demo for Tinder like swipe cards</p>
-    </div>
-    <div class="tinder--card">
-      <img src="https://placeimg.com/600/300/arch">
-      <h3>Demo card 5</h3>
-      <p>This is a demo for Tinder like swipe cards</p>
-    </div>
+
+
+  @foreach($users as $user)  
+
+  <div class="tinder--card">
+    <h3 id="question1">  {{$user->name}}  </h3>
+    <img src="{{ Storage::url($user->photo) }}" alt="{{ $user->name }}'s Photo">
+</div>
+
+  
+  
+  @endforeach
   </div>
 
   <div class="tinder--buttons">
@@ -218,10 +204,6 @@ function writeLoveToServer() {
 
 function writeNopeToServer() {
         //Execute cgi to update negative
-}
-
-function myDoubleClickFunction() {
-  //TO DO: this function is called when user double clicks on card -> answer to question is displayed. See example on first and second cards. This function is called by all cards. 
 }
 
 function initCards(card, index) {

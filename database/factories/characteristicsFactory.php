@@ -3,11 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class ClientFactory extends Factory
+class characteristicsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,10 +17,8 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'description' => fake()->sentence(),
-            'code' =>  Str::random(5)
+            'apps_id' => 1,
+            'name' => $this->faker->unique()->word,
         ];
     }
 }

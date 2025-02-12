@@ -13,4 +13,10 @@ class characteristics extends Model
         'name',
         'app_id',
     ];
+
+    public function options()
+    {
+        return $this->hasMany(Option::class);
+    }
 }
+

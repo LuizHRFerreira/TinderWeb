@@ -1,23 +1,40 @@
+@php
+    $user = \Auth::user();
+@endphp
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
-      <img src="{{ asset('dist/images/sidebar/logo.png') }}" alt="company image" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Company</span>
+    
+    <!-- Logo e nome da empresa -->
+    <a href="{{ route('match.index') }}"  class="brand-link" style="padding-left: 30px;">
+      <i class="fas fa-fire nav-icon"></i>
+      <span class="brand-text font-weight-light">Tinder Web</span>
     </a>
+
 
     <!-- Sidebar -->
     <div class="sidebar">
+      
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                  <!-- Opção do Usuario logado -->
             <li class="nav-item user-panel">
-                <a href="#" class="nav-link ">
-                    <img src="{{ asset('dist/images/sidebar/default_user.png') }}" class="img-circle elevation-2" alt="User Image">
+            <a href="#" class="nav-link">
+            @if($user->photo)
+                    <!-- If user has photo show the photo -->
+                    <img class="logo-edit" src="{{ Storage::url($user->photo) }}" style="border-radius: 50%"/>
+                    @else
+                    <!-- If user hasn't photo show show place holder -->
+                    <img class="logo-edit" src="{{ asset('dist/images/sidebar/user_placeholder.jpg') }}" style="border-radius: 50%"/>
+                    @endif
                     <p>
                     {{ \Auth::user()->name }}
                     <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
+
+                <!-- Editar cadastro do usuário -->
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                     <a href="{{ route('users.profile') }}" class="nav-link">
@@ -36,29 +53,38 @@
                 </ul>
             </li>
           
+                    <!-- Opção de Dashboard -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
                 <a href="{{ route('users.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                <i class="fas fa-user nav-icon"></i>
                   <p>{{ trans('text.users') }}</p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('clients.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>{{ trans('text.clients') }}</p>
-                </a>
-              </li>
-            </ul>
           </li>
+            
+          <!-- Opção de caracteristicas -->
+          <li class="nav-item">
+            <a href="{{ route('characteristics.index') }}" class="nav-link">
+              <i class="fas fa-id-badge nav-icon"></i>
+              <p>{{ trans('text.characteristics') }}</p>
+            </a>
+          </li>
+
+          <!-- Opção de opções -->
+          <li class="nav-item">
+            <a href="{{ route('options.index') }}" class="nav-link">
+              <i class="fas fa-list nav-icon"></i>
+              <p>{{ trans('text.options') }}</p>
+            </a>
+          </li>
+
+           <!-- Opção I am -->
+           <li class="nav-item">
+            <a href="{{ route('i_am.profile') }}" class="nav-link">
+              <i class="fas fa-id-badge nav-icon"></i>
+              <p>{{ trans('text.i_am') }}</p>
+            </a>
+          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

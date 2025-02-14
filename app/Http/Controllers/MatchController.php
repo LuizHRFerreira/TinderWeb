@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\characteristics;
+use App\Models\Option;
+use App\Models\CharacteristicsOptionsUsers;
 use App\Models\Match;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -15,7 +17,8 @@ class MatchController extends Controller
     public function index()
     {   
         $users = User::all();
-        return view('match.index', compact('users'));
+        $CharacteristicsOptionsUsers = CharacteristicsOptionsUsers::all();
+        return view('match.index', compact('users','CharacteristicsOptionsUsers'));
     }
 
     public function create() {

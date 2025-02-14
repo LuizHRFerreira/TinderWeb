@@ -42,7 +42,7 @@
         @else
             <img src=""/>
         @endif
-        <!-- Input to upload photo -->
+        <!-- Botão para selecionar foto do computador -->
         <br>
         <input type="file" name="photo" id="" onchange="previewPhoto(event)">
     </div> 

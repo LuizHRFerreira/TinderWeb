@@ -1,9 +1,15 @@
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 100% !important; 
+    }
+    
+</style>
 
 <div class="row form-divider">
-    <div class="form-group col-md-12">  {{-- Corrected to col-md-12 for full width --}}
+    <div class="form-group col-md-12">
         <label>{{ trans('attributes.characteristics') }}:</label>
-        <select class="form-select" aria-label="Default select example" id="characteristics_id">
-            @foreach($characteristics as $characteristic)  {{-- Corrected variable name --}}
+        <select class="form-select" aria-label="Default select example" id="characteristics_id" name="characteristics_id">
+            @foreach($characteristics as $characteristic) 
                 <option value="{{ $characteristic['id'] }}">{{ $characteristic['name'] }}</option>
             @endforeach
         </select>
@@ -20,14 +26,12 @@
 
 
 <div class="row form-divider">
-    </div>
+</div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         $('#characteristics_id').select2({
-            placeholder: "Seleciona a caracteristica a qual a opção pertence",
-            allowClear: true
+            height:'50px',
         });
     });
 </script>
-

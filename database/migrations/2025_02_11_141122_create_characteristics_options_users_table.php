@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('characteristics_options_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('characteristics_id')->constrained('characteristics')->onDelete('cascade');
-            $table->foreignId('i_am')->constrained('options')->onDelete('cascade');
-            $table->foreignId('i_seek')->constrained('options')->onDelete('cascade');
+            //JSON é um tipo de dado que armazena um array de dados
+            $table->json('i_am')->onDelete('cascade')->nullable();
+            $table->json('i_seek')->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }

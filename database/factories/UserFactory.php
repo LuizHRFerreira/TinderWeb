@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -24,8 +27,16 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
     public function definition(): array
     {
+
+        $photoUrl = 'https://thispersondoesnotexist.com/';
+        $photoContents = Http::get($photoUrl)->body();
+        $photoPath = 'public/photos/' . uniqid() . '.jpg';
+    
+        Storage::put($photoPath, $photoContents);
+    
         return [
             'apps_id' => 1,
             'name' => $this->faker->unique()->word,
@@ -35,7 +46,7 @@ class UserFactory extends Factory
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
-            'photo' => null,
+            'photo' => $photoPath,
             'current_team_id' => null,
         ];
     }

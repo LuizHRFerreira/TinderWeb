@@ -7,6 +7,7 @@ use App\Http\Controllers\CharacteristicsController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\I_amController;
+use App\Http\Controllers\I_seekController;
 
 Route::get('/', function () {return view('welcome');});
 
@@ -26,7 +27,10 @@ Route::get('/options/create',  [OptionController::class, 'create'])->name('optio
 Route::post('/options',        [OptionController::class, 'store'])->name('options.store');
 
 Route::get('/i_am',         [I_amController::class, 'profile'])->name('i_am.profile');
-Route::post('{user_id}/i_am_update',[I_amController::class,  'update'])->name('i_am.update');});
+Route::post('{user_id}/i_am_update',[I_amController::class,  'update'])->name('i_am.update');
+
+Route::get('/i_seek',         [I_seekController::class, 'profile'])->name('i_seek.profile');
+Route::post('{user_id}/i_seek_update',[I_seekController::class,  'update'])->name('i_seek.update');
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
 
@@ -34,4 +38,4 @@ Route::get('/match', [MatchController::class, 'index']) -> name ('match.index');
 
 ;
 
-});
+});});

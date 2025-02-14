@@ -7,13 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class CharacteristicsOptionsUsers extends Model
 {
-    //Aqui eu coloco oque eu quero que seja inserido no DB dessa tabela.
     use HasFactory;
-    
+
+     //Aqui eu coloco oque eu quero que seja inserido no DB dessa tabela.
     protected $fillable = [
     'users_id',
-    'characteristics_id',
-    'options_id',
     'i_am',
     'i_seek',
     ];

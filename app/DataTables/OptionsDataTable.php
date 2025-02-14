@@ -22,7 +22,7 @@ class OptionsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'user.action')
+            ->addColumn('action', 'Teste')
             ->setRowId('id');
     }
 
@@ -65,7 +65,10 @@ class OptionsDataTable extends DataTable
     {
         return [
             Column::make('name')->title('Opção'),
-            Column::make('characteristics_id')->title('Característica'),
+            Column::make('characteristics_id')->title('Característica')->width(60),
+            Column::computed('action')
+                ->title('Ações')
+                ->align('right')
         ];
     }
 

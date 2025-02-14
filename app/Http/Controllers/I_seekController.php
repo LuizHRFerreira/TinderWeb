@@ -12,7 +12,7 @@ use App\Models\characteristics;
 use App\Models\Option;
 use App\Models\CharacteristicsOptionsUsers;
 
-class I_amController extends Controller
+class I_seekController extends Controller
 {
 
     # Retorna a view para a pessoa escolher as opções das características que ela tem
@@ -27,7 +27,7 @@ class I_amController extends Controller
         $options = Option::all();
 
         # Retornando a view com as variáveis
-        return view('i_am.profile', compact('user', 'users', 'characteristics', 'options'));
+        return view('i_seek.profile', compact('user', 'users', 'characteristics', 'options'));
     }
 
     # Atualiza os dados do usuário
@@ -43,7 +43,7 @@ class I_amController extends Controller
             // updateOrCreate vai procurar pelo id do usuário e atualizar os dados, caso não encontre, ele cria um novo registro
             CharacteristicsOptionsUsers::updateOrCreate(
                 ['users_id' => $user->id], 
-                ['i_am' => $selectedOptionsJson] 
+                ['i_seek' => $selectedOptionsJson] 
             );
 
         } catch (\Exception $e) {

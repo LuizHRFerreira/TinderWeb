@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Option;
+use App\Models\characteristics;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -10,7 +11,7 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
-use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Services\DataTable;;
 
 class OptionsDataTable extends DataTable
 {
@@ -22,7 +23,10 @@ class OptionsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'Teste')
+        ->addColumn('CharacteristicName', function($row){
+            return $row->characteristics->name;
+        })
+            ->addColumn('action', 'Teste', 'CharacteristicName')
             ->setRowId('id');
     }
 
@@ -65,7 +69,7 @@ class OptionsDataTable extends DataTable
     {
         return [
             Column::make('name')->title('Opção'),
-            Column::make('characteristics_id')->title('Característica')->width(60),
+            Column::make('CharacteristicName')->title('Característica')->width(60),
             Column::computed('action')
                 ->title('Ações')
                 ->align('right')

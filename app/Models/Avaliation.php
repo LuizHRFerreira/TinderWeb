@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Option extends Model
+class Avaliation extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'characteristics_id',
-        'name',
+        'avaliator_id',
+        'avaliated_id',
+        'like',
     ];
 
-    public function characteristics()
+    public function options()
     {
-        return $this->belongsTo(characteristics::class);
+        return $this->hasMany(Option::class);
     }
 }

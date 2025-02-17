@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-Use App\Models\characteristics;
+Use App\Models\CharacteristicsOptionsUsers;
 
 class User extends Authenticatable
 {
@@ -65,8 +65,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function characteristics()
-    {
-        return $this->hasMany(characteristics::class);
-    }
+    
+    public function characteristicsOptionsUsers()
+{
+    return $this->hasOne(CharacteristicsOptionsUsers::class, 'user_id')->withDefault();
+}
+
 }

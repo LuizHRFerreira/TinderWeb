@@ -1,12 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
 use App\Models\characteristics;
 use App\Models\Option;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
 use App\DataTables\OptionsDataTable;
 
 

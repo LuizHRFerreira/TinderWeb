@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('apps')->insert([
             'name' => "tinder", 
-        ]); a       
+        ]);        
 
         User::factory(5)->create();
 

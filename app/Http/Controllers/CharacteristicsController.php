@@ -1,13 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
-use App\Models\Sales;
-use App\Models\Product;
 use App\Models\characteristics;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables; 
 use App\DataTables\CharacteristicDataTable;
 
 

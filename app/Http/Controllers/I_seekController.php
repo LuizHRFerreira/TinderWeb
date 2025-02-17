@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\DataTables\UserDataTable;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\characteristics;
@@ -19,15 +16,24 @@ class I_seekController extends Controller
     # e todos as variáveis (As que começam com $) são passadas para a view
     public function profile()
     {
+        
         # Utilizando as models para pegar os dados do banco de dados (as models sestão sendo importadas no início desse arquivo)
         $users = User::all();
         $user = \Auth::user();
         $characteristics = Characteristics::all();
         $CharacteristicsOptionsUsers = CharacteristicsOptionsUsers::all();
         $options = Option::all();
+        
+        // Busca as opções já selecionadas antes pelo usuário
+        $selectedOptions = CharacteristicsOptionsUsers::where('user_id', auth()->id())
+        //Proccura a coluna específica
+        ->pluck('i_seek')
+        // Transforma em array
+        ->map(function ($item) {return json_decode($item, true);})->flatten()->toArray();
+
 
         # Retornando a view com as variáveis
-        return view('i_seek.profile', compact('user', 'users', 'characteristics', 'options'));
+        return view('i_seek.profile', compact('user', 'users', 'characteristics', 'options','selectedOptions'));
     }
 
     # Atualiza os dados do usuário
@@ -42,7 +48,7 @@ class I_seekController extends Controller
 
             // updateOrCreate vai procurar pelo id do usuário e atualizar os dados, caso não encontre, ele cria um novo registro
             CharacteristicsOptionsUsers::updateOrCreate(
-                ['users_id' => $user->id], 
+                ['user_id' => $user->id], 
                 ['i_seek' => $selectedOptionsJson] 
             );
 

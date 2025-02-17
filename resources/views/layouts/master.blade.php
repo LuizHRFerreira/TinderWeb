@@ -32,6 +32,8 @@
         <link rel="stylesheet" href="{{ asset('css/master.css') }}">
         @livewireStyles
 
+        @yield('scripts')
+
     </head>
     <body class="font-sans antialiased">
 

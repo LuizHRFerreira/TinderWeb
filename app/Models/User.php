@@ -10,6 +10,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 Use App\Models\CharacteristicsOptionsUsers;
+Use App\Models\Avaliation;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class User extends Authenticatable
 {
@@ -18,6 +21,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +34,7 @@ class User extends Authenticatable
         'password',
         'apps_id',
         'profile_photo_path',
+        
     ];
 
     /**
@@ -66,9 +71,12 @@ class User extends Authenticatable
         ];
     }
     
-    public function characteristicsOptionsUsers()
-{
+    public function characteristicsOptionsUsers(){
     return $this->hasOne(CharacteristicsOptionsUsers::class, 'user_id')->withDefault();
-}
+    }
+
+    public function avaliation(){
+        return $this->hasOne(Avaliation::class)->withDefault();
+        }
 
 }

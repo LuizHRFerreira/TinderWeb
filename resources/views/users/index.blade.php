@@ -12,7 +12,6 @@
                         </div>
                         <div class="col-sm-6">
                         <div class="breadcrumb float-sm-right">
-                            <button type="button" class="btn btn-primary">{{ trans('text.new') }}</button>
                         </div>
                         </div>
                     </div>

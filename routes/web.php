@@ -8,6 +8,8 @@ use App\Http\Controllers\OptionController;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\I_amController;
 use App\Http\Controllers\I_seekController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TesteController;
 
 // Rota para a tela inicial
 Route::get('/', function () {return view('welcome');});
@@ -46,4 +48,5 @@ Route::post('{user_id}/i_am_update',[I_amController::class,  'update'])->name('i
 Route::get('/i_seek',         [I_seekController::class, 'profile'])->name('i_seek.profile');
 Route::post('{user_id}/i_seek_update',[I_seekController::class,  'update'])->name('i_seek.update');
 
+Route::get('/dashboard',      [DashboardController::class, 'index'])->name('dashboard.index');
 });});

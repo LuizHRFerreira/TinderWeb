@@ -3,7 +3,7 @@
 
 @section('content')
   
-<!-- Conteúdo da tela -->
+  <!-- Conteúdo da tela -->
   <div class="tinder">
 
     <!-- Cria os ícons de X e coração -->
@@ -34,7 +34,9 @@
                   <li>Nenhuma característica selecionada.</li>
               @endforelse
             </ul>
-            <input class="id" type="text" value="{{$user->id}}"/>
+            <input class="id" type="hidden" value="{{$user->id}}"/>
+            <input class="match" type="text" value="{{$user->like->like}}"/>
+            <audio id="alarmSound" src="{{ Storage::url('public/audio/alarme.mp3') }}"></audio>
           </div>
         </div>
 
@@ -237,6 +239,9 @@
   
   <!-- importa o script do hammer.js que deixa arrastar os cards -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+  <!-- importando o js do sweetbutton -->
+  <script src="{{ asset('js/sweetalert.js') }}"></script>
   
   <script>
 
@@ -321,16 +326,42 @@
           event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
           
           var card = event.target;
-          //Pega o id do user logado
+          // Pega o id do user logado
           var avaliator_id = {{ Auth::user()->id }};
-          //Pega o id do user do card
+          // Pega o id do user do card
           var id = card.querySelector('.id').value;
+          // Vai pegar o id da pessoa se ela deu like
+          var match = card.querySelector('.match').value;
+
+          function tocarAlarme() {
+          let som = document.getElementById("alarmSound");
+          som.play();
+          }
+          
 
           var avaliated_id = card.querySelector('.id').value;
           var like = event.deltaX > 0;
 
           // Verificando a direção do movimento para determinar se foi like ou deslike
           if (event.deltaX > 0) {
+            if(match == 1)
+          {
+              
+            tocarAlarme()
+
+              Swal.fire({
+                title: '🔥 Deu Match! 🔥',
+                  text: 'Vocês dois se curtiram!',
+                  imageUrl: 'https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f525.gif',
+                  imageWidth: 300,
+                  imageHeight: 200,
+                  imageAlt: 'Deu Match!',
+                  background: '#ffe4e1',
+                  color: '#d63384'
+              })
+
+          }
+          else{}
 
           } else {
           }
@@ -379,11 +410,34 @@
         var avaliated_id = card.querySelector('.id').value;
         var like = isLove;
 
+      // Vai pegar o id da pessoa se ela deu like
+      var match = card.querySelector('.match').value;
+
+      function tocarAlarme() {
+          let som = document.getElementById("alarmSound");
+          som.play();
+          }
+
         // Se clicar no coração
         if (isLove) {
 
-        //Animação do card
-        card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
+          //Animação do card
+          card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
+          if(match == 1)
+            {
+              Swal.fire({
+                title: '🔥 Deu Match! 🔥',
+                  text: 'Vocês dois se curtiram!',
+                  imageUrl: 'https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f525.gif',
+                  imageWidth: 300,
+                  imageHeight: 200,
+                  imageAlt: 'Deu Match!',
+                  background: '#ffe4e1',
+                  color: '#d63384'
+              })
+
+              tocarAlarme()
+            };
 
         } else {
 
@@ -391,7 +445,7 @@
         card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';}
 
 
-//==========================================================================================
+    //==========================================================================================
         
         // Requisição AJAX dentro do listener
         $.ajax({

@@ -9,24 +9,21 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 
-class UserController extends Controller
-{
+class UserController extends Controller{
+    
     # Retorna a view index com a tabela de usuários
-    public function index(UserDataTable $dataTable) 
-    {
+    public function index(UserDataTable $dataTable){
         return $dataTable->render('users.index');
     }
 
     # Retorna a view de perfil do usuário
-    public function profile()
-    {
+    public function profile()    {
         $user = \Auth::user();
         return view('users.profile', compact('user'));
     }
 
     # Atualiza os dados do usuário
-    public function update(Request $request)
-    {
+    public function update(Request $request){
         \DB::beginTransaction();
         
         # Validação dos campos
@@ -73,4 +70,6 @@ class UserController extends Controller
         Session::flash('success', trans('message.success_on_update'));
         return redirect()->back();
     }
+
+    
 }

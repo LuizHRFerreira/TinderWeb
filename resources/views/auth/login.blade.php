@@ -3,7 +3,7 @@
 <div class="login-box">
     <div class="login-logo">
         <a href="/">
-            <img src="{{ asset('dist/images/sidebar/logo.png') }}" alt="logo" class="brand-image img-circle elevation-3 logo-login" style="opacity: .8">
+            <img src="{{ asset('dist/images/sidebar/logo.gif') }}" alt="logo" class="brand-image img-circle elevation-3 logo-login" style="opacity: .8">
         </a>
     </div>
     <!-- /.login-logo -->

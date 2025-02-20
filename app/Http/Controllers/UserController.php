@@ -40,11 +40,9 @@ class UserController extends Controller{
             if ($request->hasFile('photo')) {
 
                 # Deleta a foto antiga
-               
                     if ($user->photo) {
                         Storage::delete($user->photo);
                     }
-                    
                     # Salva a nova foto
                     $path = $request->file('photo')->store('public/photos'); 
                 

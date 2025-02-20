@@ -65,7 +65,7 @@
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
         <a href="/">
-            <img src="{{ asset('dist/images/sidebar/logo.png') }}" alt="logo" class="brand-image img-circle elevation-3 logo-login" style="opacity: .8">
+            <img src="{{ asset('dist/images/sidebar/logo.gif') }}" alt="logo" class="brand-image img-circle elevation-3 logo-login" style="opacity: .8">
         </a>
       </div>
       <div class="card-body">

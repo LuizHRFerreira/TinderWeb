@@ -2,6 +2,11 @@
 
 <style>
 
+aside.main-sidebar {
+    height: 100vh; /* Or 100% if the parent is already sized correctly */
+    /* Other sidebar styles if needed */
+}
+
   .matches{
     background-color:rgb(39, 39, 39);
     border-radius: 10px;
@@ -134,7 +139,7 @@
       </form>
     </div>
     <h2 class="brand-link"></h2>
-    <h2 class="brand-link" style="align:center"> Matchs 🔥 </h2>
+    <h2 class="brand-link" style="align:center"> Matches 🔥 </h2>
 
       @foreach ($matches as $match)
         <li class="matches">

@@ -14,9 +14,26 @@ class OptionFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'characteristics_id'=> $this->faker->NumberBetween(1, 5),
-            'name'=> $this->faker->unique()->word,
+        static $characteristicId = 1;
+        static $optionCount = 1;
+
+        $data = [
+            'characteristics_id' => $characteristicId,
+            'name' => $this->faker->unique()->word,
         ];
+
+        $optionCount++;
+
+        if ($optionCount > 2) {  // Reset after two options
+            $characteristicId++;
+            $optionCount = 1;
+        }
+
+        if ($characteristicId > 5) { //stop creating after characteristc 5
+            $characteristicId = 1;
+        }
+
+
+        return $data;
     }
 }

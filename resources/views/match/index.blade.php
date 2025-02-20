@@ -10,12 +10,16 @@
     <div class="tinder--status">
       <i class="fa fa-remove"></i>
       <i class="fa fa-heart"></i>
-    </div>
+    </div>    
 
     <!-- Cria os cards -->
     <div class="tinder--cards">
 
+    
+    
+
       @foreach($users as $user)  
+
 
         <!-- nome -->
         <div class="tinder--card" data-id="{{ $user->id }}">
@@ -35,7 +39,7 @@
               @endforelse
             </ul>
             <input class="id" type="hidden" value="{{$user->id}}"/>
-            <input class="match" type="text" value="{{$user->like->like}}"/>
+            <input class="match" type="hidden" value="{{$user->like->like}}"/>
             <audio id="alarmSound" src="{{ Storage::url('public/audio/alarme.mp3') }}"></audio>
           </div>
         </div>

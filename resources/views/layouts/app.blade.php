@@ -22,9 +22,13 @@
             }
         </style>
     </head>
-    <body class="hold-transition login-page">
-        @yield('content')
+    <body class="hold-transition login-page" style=" background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{ asset('dist/images/sidebar/bg.jpg') }});background-size: cover; background-position: center;background-repeat: no-repeat; ">
+    
+    <h1 style="color: white;">Bem Vindo!!</h1>    
+    
+    @yield('content')
     </body>
+
     <!-- jQuery 
     <script src="{{ asset('dist/plugins/jquery/jquery.min.js') }}"></script>-->
     <!-- Bootstrap 4 -->

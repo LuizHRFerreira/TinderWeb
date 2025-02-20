@@ -30,22 +30,16 @@
     {{-- Foto Field --}}
     <div class="form-group col-md-12">
         <label for="description">{{ trans('attributes.photo') }}:</label>
-
-        <!-- If user has a photo, show the photo -->
-        @if (isset($user))
-            <!-- Div needed to restrict link to img -->
-            <div style="width:10%">
-                <a href="{{ Storage::url($user->photo) }}"> 
-                    <img class="logo-edit" height="300" src="{{  isset ($user->photo)  ? Storage::url($user->photo) : asset('dist/images/sidebar/user_placeholder.jpg') }}" id="photo"/>
-                </a>
-            </div>
-        @else
-            <img src=""/>
-        @endif
-        <!-- Botão para selecionar foto do computador -->
+        <div style="width:10%">
+            <img class="logo-edit" height="300" 
+                 src="{{ !empty($user->photo) ? Storage::url($user->photo) : asset('dist/images/sidebar/user_placeholder.jpg') }}" 
+                 id="photo"/>
+        </div>
+    
         <br>
         <input type="file" name="photo" id="" onchange="previewPhoto(event)">
-    </div> 
+    </div>
+    
      
 </div>
 

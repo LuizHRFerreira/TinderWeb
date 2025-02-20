@@ -1,15 +1,15 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
+
 @extends('layouts.master')
 
 @section('content')
     <div class="row">
-
         <div class="col-12">
             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Charts</h1>
+                            <h1>{{trans('text.Charts') }}</h1>
                         </div>
                         <div class="col-sm-6">
                         <div class="breadcrumb float-sm-right">
@@ -20,26 +20,31 @@
             </section>
         </div>
         <div class="col-12">
-            <div class="card">
-                
-                <div class="card-body">
-                    <div id="chart-container"></div>
-                </div>
+            <div>
+                @foreach($characteristics as $characteristic)
+                    <div class="card">
+                        <p class="h1">{{$characteristic->name}}</p>
+                        <div class="card-body">
+                            <div id="{{$characteristic->id}}"></div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
     <script>
         $(document).ready(function () {
+            @foreach($characteristics as $characteristic)
         // Create the chart
-        Highcharts.chart('chart-container', {
+        Highcharts.chart("{{$characteristic->id}}", {
             chart: {
                 type: 'pie'
             },
             title: {
-                text: 'Browser market shares. January, 2022'
+                text: 'As opções procuradas com mais frequência'
             },
             subtitle: {
-                text: 'Click the slices to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+                text: 'Passe o mouse por cima de cada fatia do gráfico para mais detalhes'
             },
 
             accessibility: {
@@ -83,34 +88,20 @@
 
             series: [
                 {
-                    name: 'Browsers',
+                    name: 'Opção',
                     colorByPoint: true,
+
+
                     data: [
+                        @foreach($options->where('characteristics_id', $characteristic->id) as $option)
                         {
-                            name: 'Chrome',
-                            y: 61.04,
-                            drilldown: 'Chrome'
-                        },
-                        {
-                            name: 'Safari',
-                            y: 9.47,
-                            drilldown: 'Safari'
-                        },
-                        {
-                            name: 'Edge',
-                            y: 9.32,
-                            drilldown: 'Edge'
-                        },
-                        {
-                            name: 'Firefox',
-                            y: 8.15,
-                            drilldown: 'Firefox'
-                        },
-                        {
-                            name: 'Other',
-                            y: 11.02,
-                            drilldown: null
-                        }
+                            name: "{{$option->name}}",
+
+                            y: {{ $counts->has($option->id) ? $counts[$option->id] : 0 }} * 100 / {{ $characteristicTotals[$characteristic->id] }},
+                            
+                            drilldown: "{{$option->name}}",
+                        } @if(!$loop->last), @endif
+                        @endforeach
                     ]
                 }
             ],
@@ -319,6 +310,7 @@
                 ]
             }
         });
+        @endforeach
     
         })
     </script>

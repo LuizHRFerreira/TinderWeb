@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\File;
+use Spatie\Permission\Models\Permission;
 
 
 class DatabaseSeeder extends Seeder
@@ -26,17 +27,26 @@ class DatabaseSeeder extends Seeder
             'name' => "tinder", 
         ]);        
 
-        //$folderPath=storage_path('app/public/photos');
-        //File::deleteDirectory($folderPath);
-
         User::factory(5)->create();
 
         characteristics::factory(5)->create();
 
-        Option::factory(5)->create();
+        Option::factory(10)->create();
 
         CharacteristicsOptionsUsers::factory(5)->create();
 
+        
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'user']);
+
+        Permission::create(['name' => 'edit posts']);
+        Permission::create(['name' => 'delete posts']);
+
+        $user = User::find(1);
+        $user->assignRole('admin');
+        $user->givePermissionTo('edit posts');
+
+        
         
     }
 }

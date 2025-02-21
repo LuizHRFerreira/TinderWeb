@@ -10,11 +10,10 @@ class TesteController extends Controller
 {
 
     
-    public function teste()
+    public function index()
     {
         
-        
-        dd($dd);
+        return view('Teste.index');
 
     }
 

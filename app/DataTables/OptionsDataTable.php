@@ -26,7 +26,19 @@ class OptionsDataTable extends DataTable
         ->addColumn('CharacteristicName', function($row){
             return $row->characteristics->name;
         })
-            ->addColumn('action', 'Teste', 'CharacteristicName')
+        ->addColumn('action', function($row){
+            $edit = route('options.edit', ['option' => $row->id]);
+            $delete = route('options.destroy', ['option_id' => $row->id]);
+            $btn = 
+                '<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <a href="' .$edit. '"><button type="button" class="btn btn-success" title="Editar opção"><i class="fa fa-edit"></i></button></a>
+                <form method="post" action="'.$delete. '">
+                    <input type="hidden" name="_token" value="'.csrf_token().'">
+                    <button type="submit" class="btn btn-danger ml-1" onclick="return confirm(&quot;Você tem certeza?&quot;)" data-toggle="tooltip" title="Remover opção"><i class="fas fa-trash"></i></button>
+                    </form>
+            </div>';
+            return $btn;
+        })
             ->setRowId('id');
     }
 

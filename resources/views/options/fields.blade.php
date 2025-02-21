@@ -5,11 +5,16 @@
     
 </style>
 
+
+
+
+
 <div class="row form-divider">
     <div class="form-group col-md-12">
         <label>{{ trans('attributes.characteristics') }}:</label>
-        <select class="form-select" aria-label="Default select example" id="characteristics_id" name="characteristics_id">
-            @foreach($characteristics as $characteristic) 
+        <select class="form-select" aria-label="Default select example" id="characteristics_id" name="characteristics_id" value="{option->nome}">
+            
+            @foreach($characteristics as $characteristic)
                 <option value="{{ $characteristic['id'] }}">{{ $characteristic['name'] }}</option>
             @endforeach
         </select>
@@ -19,8 +24,10 @@
         @if(isset($options))
             <input type="text" class="form-control" value="{{ $options->name }}" name="name" id="name">
         @else
-            <input type="text" class="form-control" name="name" id="name">
+            <input type="text" class="form-control" name="name" id="name" placeholder="{{$option->name}}" Value="{{$option->name}}">
         @endif
+
+        
     </div>
 </div>
 

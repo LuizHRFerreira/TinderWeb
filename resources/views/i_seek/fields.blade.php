@@ -15,6 +15,7 @@
             @foreach($options->where('characteristics_id', $characteristic->id) as $option)  
                         <li class="list-inline-item">
 
+                            <!-- Cria o imput da checkbox, chama ele com o nome da opção e aplica o valor como id -->    
                             <input type="checkbox" name="selected_options[]" value="{{$option->id}}" id={{$option->id}} {{ in_array($option->id, old('selected_options', $selectedOptions ?? [])) ? 'checked' : '' }}>
                             <label for={{$option->id}}> {{$option->name}} </label>
 

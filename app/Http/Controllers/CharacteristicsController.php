@@ -21,6 +21,13 @@ class characteristicsController extends Controller
         return view('characteristics.create');
     }
 
+    public function edit() {
+        return view('characteristics.edit');
+    }
+
+    public function delete() {
+        return view('characteristics.delete');
+    }
     
     public function store() {
         $characteristics = new Characteristics;

@@ -21,24 +21,33 @@ Route::middleware([AuthMiddleware::class,])->group(function () {
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
 
 // Rota para a tela match
-Route::get('/match', [MatchController::class, 'index']) -> name ('match.index');
-Route::post('/match', [MatchController::class, 'store']) -> name ('match.store');
+Route::group(['prefix' => 'match'], function () {
+    Route::get('/', [MatchController::class, 'index']) -> name ('match.index');
+    Route::post('/', [MatchController::class, 'store']) -> name ('match.store');
+});
 
 // Rota para a tela de usuários
 Route::group(['prefix' => 'users'], function () {
-Route::get('/',                [UserController::class,   'index'])->name('users.index');
-Route::get('/profile',         [UserController::class, 'profile'])->name('users.profile');
-Route::post('{user_id}/update',[UserController::class,  'update'])->name('users.update');});
+    Route::get('/',                [UserController::class,   'index'])->name('users.index');
+    Route::get('/profile',         [UserController::class, 'profile'])->name('users.profile');
+    Route::post('{user_id}/update',[UserController::class,  'update'])->name('users.update');
+});
 
 // Rota para a tela de características
-Route::get('/characteristics',         [CharacteristicsController::class, 'index'])->name('characteristics.index');
-Route::get('/characteristics/create',  [CharacteristicsController::class, 'create'])->name('characteristics.create');
-Route::post('/characteristics',        [CharacteristicsController::class, 'store'])->name('characteristics.store');
+Route::group(['prefix' => 'characteristics'], function () {
+    Route::get('/',         [CharacteristicsController::class, 'index'])->name('characteristics.index');
+    Route::get('/create',  [CharacteristicsController::class, 'create'])->name('characteristics.create');
+    Route::post('/',        [CharacteristicsController::class, 'store'])->name('characteristics.store');
+});
 
 // Rota para a tela de opções
-Route::get('/options',         [OptionController::class, 'index'])->name('options.index');
-Route::get('/options/create',  [OptionController::class, 'create'])->name('options.create');
-Route::post('/options',        [OptionController::class, 'store'])->name('options.store');
+Route::group(['prefix' => 'options'], function () {
+    Route::get('/',                    [OptionController::class,  'index'])->name(   'options.index');
+    Route::get('/create',              [OptionController::class,  'create'])->name( 'options.create');
+    Route::get('{option}/edit', [OptionController::class, 'edit'])->name('options.edit');
+    Route::post('{option_id}/destroy',  [OptionController::class, 'destroy'])->name('options.destroy');
+    Route::post('/',                   [OptionController::class,   'store'])->name(  'options.store');
+});
 
 // Rota para a tela de I_am
 Route::get('/i_am',         [I_amController::class, 'profile'])->name('i_am.profile');
@@ -49,4 +58,8 @@ Route::get('/i_seek',         [I_seekController::class, 'profile'])->name('i_see
 Route::post('{user_id}/i_seek_update',[I_seekController::class,  'update'])->name('i_seek.update');
 
 Route::get('/dashboard',      [DashboardController::class, 'index'])->name('dashboard.index');
-});});
+});
+
+Route::get('/teste',         [TesteController::class, 'index'])->name('teste.index');
+
+});

@@ -27,13 +27,13 @@ class DatabaseSeeder extends Seeder
             'name' => "tinder", 
         ]);        
 
-        User::factory(5)->create();
+        User::factory(50)->create();
 
         characteristics::factory(5)->create();
 
-        Option::factory(10)->create();
+        Option::factory(30)->create();
 
-        CharacteristicsOptionsUsers::factory(5)->create();
+        CharacteristicsOptionsUsers::factory(50)->create();
 
         
         Role::create(['name' => 'admin']);

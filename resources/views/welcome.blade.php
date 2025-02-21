@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Tinder WEB</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -30,7 +33,7 @@
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                     <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                         <div class="flex lg:justify-center lg:col-start-2" >
-                        <img src="{{ asset('dist/images/sidebar/logo.gif') }}" style="opacity: .8; width: 100px;">
+                        <img src="{{ asset('favicon.gif') }}" style="opacity: .8; width: 100px;">
                         <p style="font-size: 50px;">Tinder WEB</p>
                         </div>
                         

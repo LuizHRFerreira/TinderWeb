@@ -8,7 +8,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Criando nova opção para as características cadastradas</h1>
+                            <h1>Editando opções</h1>
                         </div>
                         <div class="col-sm-6">
                         </div>
@@ -16,7 +16,7 @@
                 </div>
             </section>
             <div class="container">
-            <form class="from-prevent-multiple-submits"  action="{{ route('options.store') }}" method="post" encwetype="multipart/form-data">
+            <form class="from-prevent-multiple-submits"  action="{{ route('options.update', ['option' => $option->id]) }}" method="post" encwetype="multipart/form-data">
                 @csrf
                 @include('options.fields')
                 <div class="row no-print">

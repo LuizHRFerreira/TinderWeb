@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\DataTables\UserDataTable;
 use Illuminate\Support\Facades\Hash;

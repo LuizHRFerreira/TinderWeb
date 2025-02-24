@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
 
         characteristics::factory(5)->create();
 
-        Option::factory(30)->create();
+        Option::factory(10)->create();
 
         CharacteristicsOptionsUsers::factory(50)->create();
 

@@ -16,12 +16,12 @@
                 </div>
             </section>
             <div class="container">
-            <form class="from-prevent-multiple-submits"  action="{{ route('characteristics.store') }}" method="post" enctype="multipart/form-data">
+            <form class="from-prevent-multiple-submits"  action="{{ route('characteristics.update') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @include('characteristics.fields')
                 <div class="row no-print">
                     <div class="col-12 mt-4">
-                        {{-- <a href="{{ route('companies.users.store', ['company_id' => request()->company_id]) }}">
+                        {{-- <a href="{{ route('companies.users.update', ['company_id' => request()->company_id]) }}">
                         <button type="button" class="btn btn-danger float-right">{{ trans('text.cancel') }}</button>
                         </a> --}}
                         <button type="submit" class="btn btn-success float-right from-prevent-multiple-submits" style="margin-right: 5px;">{{ trans('text.save') }}</button>

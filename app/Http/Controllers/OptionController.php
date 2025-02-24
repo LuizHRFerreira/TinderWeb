@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\characteristics;
 use App\Models\Option;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\DataTables\OptionsDataTable;
 
@@ -23,7 +24,7 @@ class OptionController extends Controller
 
     public function edit(Option $option, characteristics $characteristics) {
         $characteristics = characteristics::all(); 
-        return view('options.create', compact('option', 'characteristics'));
+        return view('options.edit', compact('option', 'characteristics'));
     }
 
     public function destroy(Request $request, $id) 
@@ -39,6 +40,26 @@ class OptionController extends Controller
         $options->name = request()->name;
         $options->characteristics_id = request()->characteristics_id;
         $options->save();
+
+        Session::flash('success', trans('message.success_on_update'));
+        return redirect()->route('options.index');
+    }
+
+    public function update(Request $request){
+
+        \DB::beginTransaction();
+
+        $option = Option::findOrFail(request()->id);
+
+        
+            $option->name = request()->name;
+        
+
+        
+            $option->characteristics_id = request()->characteristics_id;
+        
+        
+        $option->save();
 
         Session::flash('success', trans('message.success_on_update'));
         return redirect()->route('options.index');

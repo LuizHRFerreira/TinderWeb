@@ -42,11 +42,12 @@ Route::group(['prefix' => 'characteristics'], function () {
 
 // Rota para a tela de opções
 Route::group(['prefix' => 'options'], function () {
-    Route::get('/',                    [OptionController::class,  'index'])->name(   'options.index');
-    Route::get('/create',              [OptionController::class,  'create'])->name( 'options.create');
-    Route::get('{option}/edit', [OptionController::class, 'edit'])->name('options.edit');
-    Route::post('{option_id}/destroy',  [OptionController::class, 'destroy'])->name('options.destroy');
-    Route::post('/',                   [OptionController::class,   'store'])->name(  'options.store');
+    Route::get('/',                    [OptionController::class,   'index'])->name(   'options.index');
+    Route::get('/create',              [OptionController::class,  'create'])->name(  'options.create');
+    Route::get('{option}/edit',        [OptionController::class,    'edit'])->name(    'options.edit');
+    Route::post('{option_id}/destroy', [OptionController::class, 'destroy'])->name( 'options.destroy');
+    Route::post('/',                   [OptionController::class,  'update'])->name(  'options.update');
+    Route::post('/',                   [OptionController::class,   'store'])->name(   'options.store');
 });
 
 // Rota para a tela de I_am

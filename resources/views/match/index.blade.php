@@ -6,59 +6,19 @@
   <!-- Conteúdo da tela -->
   <div class="tinder">
 
-    <!-- Cria os ícons de X e coração -->
-    <div class="tinder--status">
-      <i class="fa fa-remove"></i>
-      <i class="fa fa-heart"></i>
-    </div>    
-
     <!-- Cria os cards -->
-    <div class="tinder--cards">
-
-    
-    
-
-      @foreach($users as $user)  
-
-
-        <!-- nome -->
-        <div class="tinder--card" data-id="{{ $user->id }}">
-          <p class="name"> {{$user->name}} </p>
-
-          <!-- foto -->
-          <img src="{{ Storage::url($user->photo) }}" alt="{{ $user->name }}'s Photo">
-
-          <!-- Caracteristica -->
-          <div class='description'>
-            <ul class="list-unstyled">
-              <p>Detalhes</p>
-              @forelse ($user->i_am_options as $option)
-                  <li>{{ $option->name }}</li>
-              @empty
-                  <li>Nenhuma característica selecionada.</li>
-              @endforelse
-            </ul>
-            <input class="id" type="hidden" value="{{$user->id}}"/>
-            <input class="match" type="hidden" value="{{$user->like->like}}"/>
-            <audio id="alarmSound" src="{{ Storage::url('public/audio/alarme.mp3') }}"></audio>
-          </div>
-        </div>
-
-      @endforeach
-
-      <!-- Ultimo card -->
-      <div class="tinder--card">
-        <p class="ultimo_card">Sem novas pessoas para conhecer? 🔄 Atualize seus interesses e descubra novas conexões!</p>
-      </div>
+    <div class="tinder--cards" id="user-cards-container">
+      @include('match.user_cards')
     </div>
+
 
     <!-- Botões de like e deslike -->
     <div class="tinder--buttons">
       <button id="nope"><i class="fa fa-remove"></i></button>
       <button id="love"><i class="fa fa-heart"></i></button>
     </div>
-
   </div>
+  
 @endsection
 
 <!-- Script dos cards -->
@@ -186,6 +146,8 @@
       text-align: center;
       padding-top: 20px;
       background: #f0e5c9;
+      z-index: 3;
+      position: relative;
       }
 
       .tinder--buttons button {
@@ -249,238 +211,235 @@
   
   <script>
 
-    $(document).ready(function (){
+    $(document).ready(function () {
 
-      // Criação das variaveis que seleciona os elementos do html
-      var tinderContainer = document.querySelector('.tinder');
-      var allCards = document.querySelectorAll('.tinder--card');
-      var nope = document.getElementById('nope');
-      var love = document.getElementById('love');
-    
+    // Criação das variáveis que selecionam os elementos do HTML
+    var tinderContainer = document.querySelector('.tinder');
+    var allCards = document.querySelectorAll('#user-cards-container .tinder--card');
+    var nope = document.getElementById('nope');
+    var love = document.getElementById('love');
 
-      // Função que Inicializa a visualização dos cards
-      function initCards(card, index) {
+    // Requisições para importação de mais cards
+    const userCardsContainer = document.getElementById('user-cards-container');
+    let currentPage = 1;
+    let cardsPassed = 0;
+    let usersRemaining = {{ $usersRemaining }};
 
-      // Seleciona todos os cards que não foram removidos
-      var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
+    // Função que inicializa a visualização dos cards
+    function initCards() {
+        var newCards = document.querySelectorAll('#user-cards-container .tinder--card:not(.removed)');
+        allCards = newCards;
 
-      // Para cada card que não foi removido, faz a animação de ir deixando o card transparente e aumentando o tamanho
-      newCards.forEach(function (card, index) {
-
-        // Animação que deixa o card em cima dos outros
-        card.style.zIndex = allCards.length - index;
-
-        // Animação que aumenta o tamanho do card
-        card.style.transform = 'scale(' + (20 - index) / 20 + ') translateY(-' + 30 * index + 'px)';
-
-        // Animação que deixa o card transparente
-        card.style.opacity = (10 - index) / 10;
-      });
-
-    
-      tinderContainer.classList.add('loaded');
-      }
-
-      initCards();
-
-      allCards.forEach(function (el) 
-      {
-        var hammertime = new Hammer(el);
-
-        hammertime.on('pan', function (event) {
-          el.classList.add('moving');
+        newCards.forEach(function (card, index) {
+            card.style.zIndex = allCards.length - index;
+            card.style.transform = 'scale(' + (20 - index) / 20 + ') translateY(-' + 30 * index + 'px)';
+            card.style.opacity = (10 - index) / 10;
         });
 
-        hammertime.on('pan', function (event) {
-          if (event.deltaX === 0) return;
-          if (event.center.x === 0 && event.center.y === 0) return;
+        newCards.forEach(function (el) {
+            var hammertime = new Hammer(el);
 
-          tinderContainer.classList.toggle('tinder_love', event.deltaX > 0);
-          tinderContainer.classList.toggle('tinder_nope', event.deltaX < 0);
+            hammertime.on('pan', function (event) {
+                el.classList.add('moving');
+            });
 
-          var xMulti = event.deltaX * 0.03;
-          var yMulti = event.deltaY / 80;
-          var rotate = xMulti * yMulti;
+            hammertime.on('pan', function (event) {
+                if (event.deltaX === 0) return;
+                if (event.center.x === 0 && event.center.y === 0) return;
 
-          event.target.style.transform = 'translate(' + event.deltaX + 'px, ' + event.deltaY + 'px) rotate(' + rotate + 'deg)';
-        });
+                tinderContainer.classList.toggle('tinder_love', event.deltaX > 0);
+                tinderContainer.classList.toggle('tinder_nope', event.deltaX < 0);
 
-        hammertime.on('panend', function (event) {
-        el.classList.remove('moving');
-        tinderContainer.classList.remove('tinder_love');
-        tinderContainer.classList.remove('tinder_nope');
+                var xMulti = event.deltaX * 0.03;
+                var yMulti = event.deltaY / 80;
+                var rotate = xMulti * yMulti;
 
-        var moveOutWidth = document.body.clientWidth;
-        var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
+                event.target.style.transform =
+                    'translate(' + event.deltaX + 'px, ' + event.deltaY + 'px) rotate(' + rotate + 'deg)';
 
-        event.target.classList.toggle('removed', !keep);
+            });
 
-        if (keep) {
-          event.target.style.transform = '';
-        } else {
-          var endX = Math.max(Math.abs(event.velocityX) * moveOutWidth, moveOutWidth);
-          var toX = event.deltaX > 0 ? endX : -endX;
-          var endY = Math.abs(event.velocityY) * moveOutWidth;
-          var toY = event.deltaY > 0 ? endY : -endY;
-          var xMulti = event.deltaX * 0.03;
-          var yMulti = event.deltaY / 80;
-          var rotate = xMulti * yMulti;
-          var like = event.deltaX > 0;
+            hammertime.on('panend', function (event) {
+                el.classList.remove('moving');
+                tinderContainer.classList.remove('tinder_love');
+                tinderContainer.classList.remove('tinder_nope');
 
-          event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
-          
-          var card = event.target;
-          // Pega o id do user logado
-          var avaliator_id = {{ Auth::user()->id }};
-          // Pega o id do user do card
-          var id = card.querySelector('.id').value;
-          // Vai pegar o id da pessoa se ela deu like
-          var match = card.querySelector('.match').value;
+                var moveOutWidth = document.body.clientWidth;
+                var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
 
-          function tocarAlarme() {
-          let som = document.getElementById("alarmSound");
-          som.play();
-          }
-          
+                event.target.classList.toggle('removed', !keep);
 
-          var avaliated_id = card.querySelector('.id').value;
-          var like = event.deltaX > 0;
+                if (keep) {
+                    event.target.style.transform = '';
+                } else {
+                    var endX = Math.max(Math.abs(event.velocityX) * moveOutWidth, moveOutWidth);
+                    var toX = event.deltaX > 0 ? endX : -endX;
+                    var endY = Math.abs(event.velocityY) * moveOutWidth;
+                    var toY = event.deltaY > 0 ? endY : -endY;
+                    var xMulti = event.deltaX * 0.03;
+                    var yMulti = event.deltaY / 80;
+                    var rotate = xMulti * yMulti;
 
-          // Verificando a direção do movimento para determinar se foi like ou deslike
-          if (event.deltaX > 0) {
-            if(match == 1)
-          {
-              
-            tocarAlarme()
+                    event.target.style.transform =
+                        'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
 
-              Swal.fire({
-                title: '🔥 Deu Match! 🔥',
-                  text: 'Vocês dois se curtiram!',
-                  imageUrl: 'https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f525.gif',
-                  imageWidth: 300,
-                  imageHeight: 200,
-                  imageAlt: 'Deu Match!',
-                  background: '#ffe4e1',
-                  color: '#d63384'
-              })
+                    var card = event.target;
+                    var avaliator_id = {{ Auth::user()->id }};
+                    var avaliated_id = card.querySelector('.id').value;
+                    var match = card.querySelector('.match').value;
+                    var like = event.deltaX > 0;
 
-          }
-          else{}
+                    function tocarAlarme() {
+                        let som = document.getElementById("alarmSound");
+                        som.play();
+                    }
 
-          } else {
-          }
+                    if (like && match == 1) {
+                        tocarAlarme();
+                        Swal.fire({
+                            title: '🔥 Deu Match! 🔥',
+                            text: 'Vocês dois se curtiram!',
+                            imageUrl: 'https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f525.gif',
+                            imageWidth: 300,
+                            imageHeight: 200,
+                            imageAlt: 'Deu Match!',
+                            background: '#ffe4e1',
+                            color: '#d63384'
+                        });
+                    }
 
-            // Requisição AJAX dentro do listener
-            $.ajax({
-            url: '/match',
-            type: 'POST',
-            data: {
-                avaliator_id: avaliator_id,
-                avaliated_id: avaliated_id,
-                like: like,
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                console.log('Avaliação enviada com sucesso:', response);
+                    $.ajax({
+                        url: '/match',
+                        type: 'POST',
+                        data: {
+                            avaliator_id: avaliator_id,
+                            avaliated_id: avaliated_id,
+                            like: like,
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (response) {
+                            console.log('Avaliação enviada com sucesso:', response);
+                        },
+                        error: function (error) {
+                            console.error('Erro ao enviar avaliação:', error);
+                        }
+                    });
+
+                    if (cardsPassed % 30 === 0 && usersRemaining > 0) {
+                        currentPage++;
+                        fetch(`?page=${currentPage}`, {
+                            method: 'GET',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        })
+                            .then(response => response.text())
+                            .then(html => {
+                                const tempContainer = document.createElement('div');
+                                tempContainer.innerHTML = html;
+
+                                const newCards = tempContainer.querySelectorAll('.tinder--card');
+                                userCardsContainer.append(...newCards);
+
+                                const remainingData = tempContainer.querySelector('#users-remaining');
+                                usersRemaining = remainingData ? parseInt(remainingData.value) : 0;
+
+                            })
+                            .catch(error => console.error('Erro:', error));
+                    }
+                    
+                }
+                // Incrementa o card quando o usuario clica em um dos botões
+                cardsPassed++;
                 initCards();
-            },
-            error: function(error) {
-                console.error('Erro ao enviar avaliação:', error);
-                initCards();
-            }
+                
+            });
+
         });
-        }
-      });
 
-      });
-
-      function createButtonListener(isLove) {
-      return function (event) {
-        var cards = document.querySelectorAll('.tinder--card:not(.removed)');
-        var moveOutWidth = document.body.clientWidth * 1.5;
-
-        if (!cards.length) return false;
-
-        var card = cards[0];
-
-        // Ação quando clica no coração
-        card.classList.add('removed');
-
-        //Pega o id do user logado
-        var avaliator_id = {{ Auth::user()->id }};
-        //Pega o id do user do card
-        var avaliated_id = card.querySelector('.id').value;
-        var like = isLove;
-
-      // Vai pegar o id da pessoa se ela deu like
-      var match = card.querySelector('.match').value;
-
-      function tocarAlarme() {
-          let som = document.getElementById("alarmSound");
-          som.play();
-          }
-
-        // Se clicar no coração
-        if (isLove) {
-
-          //Animação do card
-          card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
-          if(match == 1)
-            {
-              Swal.fire({
-                title: '🔥 Deu Match! 🔥',
-                  text: 'Vocês dois se curtiram!',
-                  imageUrl: 'https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f525.gif',
-                  imageWidth: 300,
-                  imageHeight: 200,
-                  imageAlt: 'Deu Match!',
-                  background: '#ffe4e1',
-                  color: '#d63384'
-              })
-
-              tocarAlarme()
-            };
-
-        } else {
-
-        //Animação do card
-        card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';}
-
-
-    //==========================================================================================
-        
-        // Requisição AJAX dentro do listener
-        $.ajax({
-            url: '/match',
-            type: 'POST',
-            data: {
-                avaliator_id: avaliator_id,
-                avaliated_id: avaliated_id,
-                like: isLove,
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                console.log('Avaliação enviada com sucesso:', response);
-            },
-            error: function(error) {
-                console.error('Erro ao enviar avaliação:', error);
-            }
-        });
-        initCards();
-      };
+        tinderContainer.classList.add('loaded');
     }
 
-      var nopeListener = createButtonListener(false);
-      var loveListener = createButtonListener(true);
+    initCards();
 
-      nope.addEventListener('click', nopeListener);
-      love.addEventListener('click', loveListener);
+    function createButtonListener(isLove) {
+        return function (event) {
+            var cards = document.querySelectorAll('.tinder--card:not(.removed)');
+            var moveOutWidth = document.body.clientWidth * 1.5;
+
+            if (!cards.length) return false;
+
+            var card = cards[0];
+            card.classList.add('removed');
+
+            var avaliator_id = {{ Auth::user()->id }};
+            var avaliated_id = card.querySelector('.id').value;
+            var like = isLove;
+            var match = card.querySelector('.match').value;
+
+            function tocarAlarme() {
+                let som = document.getElementById("alarmSound");
+                som.play();
+            }
+
+            if (isLove) {
+                card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
+
+                if (match == 1) {
+                    tocarAlarme();
+                    Swal.fire({
+                        title: '🔥 Deu Match! 🔥',
+                        text: 'Vocês dois se curtiram!',
+                        imageUrl: 'https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f525.gif',
+                        imageWidth: 300,
+                        imageHeight: 200,
+                        imageAlt: 'Deu Match!',
+                        background: '#ffe4e1',
+                        color: '#d63384'
+                    });
+                }
+            } else {
+                card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
+            }
+
+            $.ajax({
+                url: '/match',
+                type: 'POST',
+                data: {
+                    avaliator_id: avaliator_id,
+                    avaliated_id: avaliated_id,
+                    like: like,
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    console.log('Avaliação enviada com sucesso:', response);
+                },
+                error: function (error) {
+                    console.error('Erro ao enviar avaliação:', error);
+                }
+
+                // Incrementa o card quando o usuario clica em um dos botões
+                
+
+            });
+                cardsPassed++;
+                initCards();
+        };
+    }
+
+    var nopeListener = createButtonListener(false);
+    var loveListener = createButtonListener(true);
+
+    nope.addEventListener('click', nopeListener);
+    love.addEventListener('click', loveListener);
     });
-    
+
+
   </script>
   
 @endsection

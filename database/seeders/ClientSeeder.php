@@ -2,17 +2,51 @@
 
 namespace Database\Seeders;
 
-use App\Models\Client;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Option;
+use App\Models\CharacteristicsOptionsUsers;
+use App\Models\characteristics;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\File;
+use Spatie\Permission\Models\Permission;
 
-class ClientSeeder extends Seeder
+
+class DatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        Client::factory(20000)->create();
+        \DB::table('roles')->insert([
+            'name' => 'employee',
+            'guard_name' => 'employee'
+        ]);
+
+        DB::table('apps')->insert([
+            'name' => "tinder", 
+        ]);        
+
+        User::factory(50)->create();
+
+        characteristics::factory(5)->create();
+
+        Option::factory(30)->create();
+
+        CharacteristicsOptionsUsers::factory(50)->create();
+
+        
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'user']);
+
+        Permission::create(['name' => 'edit posts']);
+        Permission::create(['name' => 'delete posts']);
+
+        $user = User::find(1);
+        $user->assignRole('admin');
+        $user->givePermissionTo('edit posts');
+
+        
+        
     }
 }

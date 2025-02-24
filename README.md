@@ -42,10 +42,10 @@ Criar uma versão web do **Tinder**, onde os usuários podem:
 | Fase                   | Início         | Entrega        | Status  |
 |------------------------|----------------|----------------|---------|
 | Kick off do projeto    | 07/01/2025     | 07/01/2025     | ✅ |
-| Sprint 1               | 07/01/2025     | 13/01/2025     | 🔄 |
-| Sprint 2               | 14/01/2025     | 20/01/2025     |  |
-| Sprint 3               | 21/01/2025     | 27/01/2025     |  |
-| Sprint 4               | 28/01/2025     | 03/02/2025     |  |
+| Sprint 1               | 07/01/2025     | 13/01/2025     | ✅ |
+| Sprint 2               | 14/01/2025     | 20/01/2025     | ✅ |
+| Sprint 3               | 21/01/2025     | 27/01/2025     | ✅ |
+| Sprint 4               | 28/01/2025     | 03/02/2025     | ✅ |
 
 ---
 
@@ -57,4 +57,52 @@ Criar uma versão web do **Tinder**, onde os usuários podem:
 - **Gráficos dinâmicos**: [Highcharts](https://www.highcharts.com/)  
 - **Banco de Dados**: [MySQL](https://www.mysql.com/)  
 - **Containerização**: [Docker](https://www.docker.com/)  
-- **Editor de Código**: [Visual Studio Code](https://code.visualstudio.com/)  
+- **Editor de Código**: [Visual Studio Code](https://code.visualstudio.com/)
+
+---
+  
+# Como Implantar
+
+### Apenas na primeira vez !
+- `git clone https://github.com/refactorian/laravel-docker.git`
+- `cd laravel-docker`
+- `docker compose up -d --build`
+- `docker compose exec phpmyadmin chmod 777 /sessions`
+- `docker compose exec php bash`
+- `chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache`
+- `chmod -R 775 /var/www/storage /var/www/bootstrap/cache`
+- `composer setup`
+
+### A partir da segunda vez
+- `docker compose up -d`
+
+### Implantar no Ubuntu 24.04 LTS
+- sudo apt update; sudo apt upgrade;
+- sudo apt install docker.io docker-compose-v2
+- sudo usermod -aG docker ${USER}
+
+# Notas
+
+### Laravel
+- [Laravel 11.x](https://github.com/refactorian/laravel-docker/tree/main)
+- [Laravel 10.x](https://github.com/refactorian/laravel-docker/tree/laravel_10x)
+
+### Laravel App
+- URL: http://localhost
+
+### Mailpit
+- URL: http://localhost:8025
+
+### phpMyAdmin
+- URL: http://localhost:8080
+- Server: `db`
+- Username: `refactorian`
+- Password: `refactorian`
+- Database: `refactorian`
+
+### Adminer
+- URL: http://localhost:9090
+- Server: `db`
+- Username: `refactorian`
+- Password: `refactorian`
+- Database: `refactorian`
